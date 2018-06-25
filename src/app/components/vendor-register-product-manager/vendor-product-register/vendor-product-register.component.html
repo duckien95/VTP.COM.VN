@@ -1,0 +1,173 @@
+<div class="portlet-body">
+  <div class="table-container">
+    <div class="form-body">
+      <div class="row">
+        <div class="col-md-12">
+          <div class="col-md-3">
+            <div class="input-group">
+              <span class="input-group-btn" style="font-size: 14px;">Tìm kiếm:&nbsp;</span>
+              <input type="text" class="form-control" id="searchProduct" />
+              <div class="input-group-btn">
+                <button class="btn green" id="clearProduct">Clear</button>
+              </div>
+            </div>
+            <div id="jsCategoryTreeProduct"></div>
+          </div>
+          <div class="col-md-9">
+            <div class="input-group">
+              <select class="form-control form-filter input-sm" id="productSearch">
+              </select>
+              <div class="input-group-btn">
+                <button class="btn green" (click)="onGetProductByCategoryIdNotRegister(categoryIds)">Tìm kiếm</button>
+              </div>
+            </div>
+            <form name="productNotRegister" #productNotRegister="ngForm">
+              <div class="portlet-body">
+                <div class="table-container">
+                  <table class="table table-striped table-bordered table-hover table-checkable" id="datatable_ajax">
+                    <thead>
+                      <tr role="row" class="heading">
+                        <th> Mã sản phẩm </th>
+                        <th class="col-md-1"> Ảnh </th>
+                        <th class="col-md-4"> Thông tin sản phẩm </th>
+                        <th style="width: 43%;"> Cấu hình sản phẩm </th>
+                        <th class="text-center" style="width: 70px;"></th>
+                      </tr>
+                    </thead>
+                    <tbody>
+                      <tr *ngFor="let item of products | paginate: { id:'pagingControl', itemsPerPage: pageSize, currentPage: pageIndex, totalItems: totalRow }; let x = index"
+                        [attr.data-index]="x">
+                        <td>{{item.productCode}}</td>
+                        <td>
+                          <img src="{{item.urlImage}}" width="135px" />
+                        </td>
+                        <td>
+                          <div class="row">
+                            <div class="col-md-12">
+                              <strong>Tên sản phẩm:</strong> {{item.productName}}
+                            </div>
+                          </div>
+                        </td>
+                        <td>
+                          <div class="row">
+                            <div class="col-md-3">
+                              <input type="text" class="form-control" placeholder="Sku" [(ngModel)]="item.vendorSku" id="vendorsku_{{x}}" name="vendorsku_{{x}}"
+                              /> </div>
+                            <div class="col-md-2">
+                              <input type="number" min="0" class="form-control" placeholder="VAT" id="VAT_{{x}}" [(ngModel)]="item.vat" name="VAT_{{x}}"
+                              /> </div>
+                            <div class="col-md-2">
+                              <input type="number" min="0" class="form-control" placeholder="VatEx" [(ngModel)]="item.vatEx" id="VatEx_{{x}}" name="VatEx_{{x}}"
+                              /> </div>
+                            <div class="col-md-5">
+                              <input type="text" class="form-control" placeholder="Barcode" [(ngModel)]="item.barcode" id="Barcode_{{x}}" name="Barcode_{{x}}"
+                              /> </div>
+                          </div>
+                        </td>
+                        <td class="text-center" style="width: 70px;">
+                          <a href="javascript:;" class="btn btn-outline blue" (click)="onAdd(item.productId)">
+                            <i class="fa fa-check"></i>
+                          </a>
+                        </td>
+                      </tr>
+                    </tbody>
+                  </table>
+                </div>
+              </div>
+            </form>
+            <pagination-controls id="pagingControl" (pageChange)="pageChanged($event)"></pagination-controls>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+<div class="row" style="height: 50px;"></div>
+<div class="portlet box green">
+  <div class="portlet-title">
+    <div class="caption">
+      <i class="fa fa-gift"></i>Danh sách sản phẩm đã chọn </div>
+  </div>
+  <div class="portlet-body">
+    <div class="row">
+      <div class="col-md-3 col-sm-3 col-xs-3">
+        <div id="jsCategoryTreeCategoryHaveProduct"></div>
+      </div>
+      <div class="col-md-9 col-sm-9 col-xs-9">
+        <div class="input-group">
+          <select class="form-control form-filter input-sm" id="productSearchIsRegister">
+          </select>
+          <div class="input-group-btn">
+            <button class="btn green" (click)="onGetProductByCategoryIdRegisted(categoryIds)">Tìm kiếm</button>
+          </div>
+        </div>
+        <form name="productNotRegister" #productNotRegister="ngForm">
+          <div class="portlet-body">
+            <div class="table-container">
+              <table class="table table-striped table-bordered table-hover table-checkable" id="datatable_ajax">
+                <thead>
+                  <tr role="row" class="heading">
+                    <th> Mã sản phẩm </th>
+                    <th class="col-md-1"> Ảnh </th>
+                    <th class="col-md-4"> Thông tin sản phẩm </th>
+                    <th style="width: 40%;"> Cấu hình sản phẩm </th>
+                    <th class="text-center" style="width: 70px;"></th>
+                  </tr>
+                </thead>
+                <tbody>
+                  <tr *ngFor="let item of productRegisteds | paginate: { id:'pagingControl', itemsPerPage: pageSize, currentPage: pageIndex, totalItems: totalRow }; let x = index"
+                    [attr.data-index]="x">
+                    <td>{{item.productCode}}</td>
+                    <td>
+                      <img src="{{item.urlImage}}" width="135px" />
+                    </td>
+                    <td>
+                      <div class="row">
+                        <div class="col-md-12">
+                          <strong>Tên sản phẩm:</strong> {{item.productName}}
+                        </div>
+                      </div>
+                      <div class="row">
+                        <div class="col-md-6">
+                          <strong>Trạng thái:</strong> {{item.statusName}}
+                        </div>
+                      </div>
+                    </td>
+                    <td>
+                      <div class="row">
+                        <div class="col-md-3">
+                          <input type="text" class="form-control" placeholder="Sku" [(ngModel)]="item.vendorSku" id="vendorsku_{{x}}" name="vendorsku_{{x}}"
+                          /> </div>
+                        <div class="col-md-2">
+                          <input type="number" min="0" class="form-control" placeholder="VAT" id="VAT_{{x}}" [(ngModel)]="item.vat" name="VAT_{{x}}"
+                          /> </div>
+                        <div class="col-md-2">
+                          <input type="number" min="0" class="form-control" placeholder="VatEx" [(ngModel)]="item.vatEx" id="VatEx_{{x}}" name="VatEx_{{x}}"
+                          /> </div>
+                        <div class="col-md-5">
+                          <input type="text" class="form-control" placeholder="Barcode" [(ngModel)]="item.barcode" id="Barcode_{{x}}" name="Barcode_{{x}}"
+                          /> </div>
+                      </div>
+                    </td>
+                    <td class="text-center" style="width: 110px;">
+                      <a href="javascript:;" class="btn btn-outline blue" (click)="onUpdate(item.id)">
+                        <i class="fa fa-pencil"></i>
+                      </a>
+                      <a href="javascript:;" *ngIf="item.status != 2" title="Ngừng bán" class="btn btn-outline red" (click)="onChangeStatus(item.id, item.productId, item.vendorId, 2)">
+                        <i class="fa fa-ban"></i>
+                      </a>
+                      <a href="javascript:;" *ngIf="item.status == 2" title="Đăng kí lại" class="btn btn-outline blue" (click)="onChangeStatus(item.id, item.productId, item.vendorId, 3)">
+                        <i class="fa fa-check"></i>
+                      </a>
+                    </td>
+                  </tr>
+                </tbody>
+              </table>
+            </div>
+          </div>
+        </form>
+        <pagination-controls id="pagingControl" (pageChange)="pageChanged($event)"></pagination-controls>
+      </div>
+    </div>
+  </div>
+</div>

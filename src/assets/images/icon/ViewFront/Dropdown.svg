@@ -1,0 +1,14 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<svg width="40px" height="40px" viewBox="0 0 40 40" version="1.1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink">
+    <!-- Generator: Sketch 48.1 (47250) - http://www.bohemiancoding.com/sketch -->
+    <title>Dropdown</title>
+    <desc>Created with Sketch.</desc>
+    <defs></defs>
+    <g id="Icon" stroke="none" stroke-width="1" fill="none" fill-rule="evenodd">
+        <g id="Dropdown" fill="#00857F" fill-rule="nonzero">
+            <g id="arrow-down-339" transform="translate(13.000000, 16.000000)">
+                <path d="M14,1.01090909 L13.0158,0 L6.9909,6.008 L6.3483,5.36727273 L6.3518,5.37090909 L0.9989,0.0327272727 L0,1.02836364 C1.4791,2.504 5.6098,6.62327273 6.9909,8 C8.0171,6.97745455 7.0168,7.97454545 14,1.01090909" id="arrow_down-[#339]"></path>
+            </g>
+        </g>
+    </g>
+</svg>

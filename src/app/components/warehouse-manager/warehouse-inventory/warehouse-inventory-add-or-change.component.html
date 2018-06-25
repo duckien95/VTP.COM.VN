@@ -1,0 +1,418 @@
+<div class="row">
+  <div class="col-md-12">
+    <div class="portlet light portlet-fit portlet-datatable">
+      <div class="portlet-title portlet-title-action ">
+        <div class="caption">
+          <i class="icon-settings font-green"></i>
+          <span [hidden]="id.length!=0" class="caption-subject font-red sbold uppercase">Add new</span>
+          <span [hidden]="id.length==0" class="caption-subject font-red sbold uppercase">Change</span>
+        </div>
+        <div class="actions">
+        </div>
+      </div>
+      <div class="portlet-body">
+        <div class="table-container">
+          <div class="form-body">
+            <div class="row">
+              <form class="form-horizontal" (ngSubmit)="onSaveWarehouseInventory(warehouseInventoryAddOrChange)" autocomplete="off" #warehouseInventoryAddOrChange="ngForm">
+                <div class="col-md-6">
+                  <div class="form-group">
+                    <label class="control-label col-md-3">Code
+                    </label>
+                    <div class="col-md-7">
+                      <input type="text" class="form-control" placeholder="Code" name="code" [(ngModel)]="warehouseInventory.code" readonly #code="ngModel"
+                      />
+                    </div>
+                  </div>
+                  <div class="form-group">
+                    <label class="control-label col-md-3">Name
+                      <span class="required"> * </span>
+                    </label>
+                    <div class="col-md-7" [ngClass]="{ 
+                            'has-error': (name.errors && (name.dirty || name.touched)) 
+                            || (!formValid && name.errors),
+                            'has-success': !name.errors 
+                               }">
+                      <input type="text" class="form-control" placeholder="Name" name="name" [(ngModel)]="warehouseInventory.name" required minlength="3"
+                        maxlength="200" #name="ngModel" />
+                      <span class="help-block" *ngIf="(name.invalid && (name.dirty  || name.touched))
+                            || (!formValid && name.errors)
+                            ">
+                        <p class="required" *ngIf="name.errors.required">Name is required</p>
+                        <p class="required" *ngIf="name.errors.maxlength || name.errors.minlength">Name must be between 3 and 200 characters</p>
+                      </span>
+                    </div>
+                  </div>
+
+                  <div class="form-group">
+                    <label class="control-label col-md-3">IsOutOfStock
+                    </label>
+                    <div class="col-md-7">
+                      <div class="mt-checkbox-inline">
+                        <label class="mt-checkbox">
+                          <input type="checkbox" [disabled]="id.length!=0" class="form-control" [(ngModel)]="warehouseInventory.isOutOfStock" name="IsOutOfStock"
+                            #isOutOfStock="ngModel" /> Select IsOutOfStock
+                          <span></span>
+                        </label>
+                      </div>
+                    </div>
+                  </div>
+                  <div class="form-group" *ngIf="warehouseInventory.isOutOfStock">
+                    <label class="control-label col-md-3">OutOfStockType
+                    </label>
+                    <div class="col-md-7">
+                      <select class="form-control form-filter input-sm" [(ngModel)]="warehouseInventory.outOfStockType" name="outOfStockType" #outOfStockType="ngModel">
+                        <option *ngFor="let item of outOfStockTypes" [ngValue]="item.value">{{item.text}}</option>
+                      </select>
+                    </div>
+                  </div>
+                  <div class="form-group" *ngIf="warehouseInventory.isOutOfStock">
+                    <label class="control-label col-md-3">OutOfStockType Description
+                    </label>
+                    <div class="col-md-7">
+                      <textarea type="text" class="form-control" placeholder="OutOfStockType Description" style="height: 80px;" name="outOfStockTypeDescription"
+                        [(ngModel)]="warehouseInventory.outOfStockTypeDescription" maxlength="500" #outOfStockTypeDescription="ngModel">
+                      </textarea>
+                    </div>
+                  </div>
+                  <div class="form-group">
+                    <label class="control-label col-md-3">Type
+                      <span class="required"> * </span>
+                    </label>
+                    <div class="col-md-7" [ngClass]="{ 
+                            'has-error': (type.errors && (type.dirty || type.touched)) 
+                            || (!formValid && type.errors),
+                            'has-success': !type.errors 
+                               }">
+                      <select class="form-control form-filter input-sm" [(ngModel)]="warehouseInventory.type" name="type" #type="ngModel" required>
+                        <option *ngFor="let item of types" [ngValue]="item.value">{{item.text}}</option>
+                      </select>
+                      <span class="help-block" *ngIf="(type.invalid && (type.dirty  || type.touched))
+                            || (!formValid && type.errors)
+                            ">
+                        <p class="required" *ngIf="type.errors.required">Type is required</p>
+                      </span>
+                    </div>
+                  </div>
+                  <div class="form-group">
+                    <label class="control-label col-md-3">Vendor
+                      <span class="required"> * </span>
+                    </label>
+                    <div class="col-md-7" [ngClass]="{ 
+                      'has-error': (vendorId.errors && (vendorId.dirty || vendorId.touched)) 
+                      || (!formValid && vendorId.errors),
+                      'has-success': !vendorId.errors 
+                         }">
+                      <input type="text" [(ngModel)]="warehouseInventory.vendorId" name="vendorId" #vendorId="ngModel" required class="hidden"
+                      />
+                      <select class="form-control form-filter input-sm" id="vendor" style="width: 300px;">
+                        <option value="{{warehouseInventory?.vendorId}}" selected="selected">{{warehouseInventory?.vendorName}}</option>
+                      </select>
+                      <span class="help-block" *ngIf="(vendorId.invalid && (vendorId.dirty  || vendorId.touched))
+                      || (!formValid && vendorId.errors)
+                      ">
+                        <p class="required" *ngIf="vendorId.errors.required">Vendor is required</p>
+                      </span>
+                    </div>
+                  </div>
+                  <div class="form-group">
+                    <label class="control-label col-md-3">Warehouse
+                      <span class="required"> * </span>
+                    </label>
+                    <div class="col-md-7" [ngClass]="{ 
+                      'has-error': (warehouseId.errors && (warehouseId.dirty || warehouseId.touched)) 
+                      || (!formValid && warehouseId.errors),
+                      'has-success': !warehouseId.errors 
+                         }">
+                      <input type="text" [(ngModel)]="warehouseInventory.warehouseId" name="warehouseId" #warehouseId="ngModel" required class="hidden"
+                      />
+                      <select class="form-control form-filter input-sm" id="warehouse" style="width: 300px;">
+                        <option value="{{warehouseInventory?.warehouseId}}" selected="selected">{{warehouseInventory?.warehouseName}}</option>
+                      </select>
+                      <span class="help-block" *ngIf="(warehouseId.invalid && (warehouseId.dirty  || warehouseId.touched))
+                      || (!formValid && warehouseId.errors)
+                      ">
+                        <p class="required" *ngIf="warehouseId.errors.required">Warehouse is required</p>
+                      </span>
+                    </div>
+                  </div>
+                  <div class="form-group">
+                    <label class="control-label col-md-3">Sale
+                      <span class="required"> * </span>
+                    </label>
+                    <div class="col-md-7" [ngClass]="{ 
+                      'has-error': (saleUserId.errors && (saleUserId.dirty || saleUserId.touched)) 
+                      || (!formValid && saleUserId.errors),
+                      'has-success': !saleUserId.errors 
+                         }">
+                      <input type="text" [(ngModel)]="warehouseInventory.saleUserId" name="saleUserId" #saleUserId="ngModel" required class="hidden"
+                      />
+                      <select class="form-control form-filter input-sm" id="sale" style="width: 300px;">
+                        <option value="{{warehouseInventory?.saleUserId}}" selected="selected">{{warehouseInventory?.saleName}}</option>
+                      </select>
+                      <span class="help-block" *ngIf="(saleUserId.invalid && (saleUserId.dirty  || saleUserId.touched))
+                      || (!formValid && saleUserId.errors)
+                      ">
+                        <p class="required" *ngIf="saleUserId.errors.required">Sale is required</p>
+                      </span>
+                    </div>
+                  </div>
+                  <div class="form-group">
+                    <label class="control-label col-md-3">Sender
+                    </label>
+                    <div class="col-md-7">
+                      <input type="text" [(ngModel)]="warehouseInventory.senderUserId" name="senderUserId" #senderUserId="ngModel" class="hidden"
+                      />
+                      <select class="form-control form-filter input-sm" id="sender" style="width: 300px;">
+                        <option value="{{warehouseInventory?.senderUserId}}" selected="selected">{{warehouseInventory?.senderName}}</option>
+                      </select>
+                    </div>
+                  </div>
+                  <div class="form-group">
+                    <label class="control-label col-md-3">Description
+                    </label>
+                    <div class="col-md-7">
+                      <input type="text" class="form-control" placeholder="Description" name="description" [(ngModel)]="warehouseInventory.description"
+                        maxlength="500" #description="ngModel" />
+                    </div>
+                  </div>
+                  <div class="form-actions">
+                    <div class="row">
+                      <div class="col-md-offset-3 col-md-9">
+                        <button type="submit" class="btn green" *ngIf="warehouseInventory.isSaleConfirmButton">Save </button>
+                        <a href="javascript:;" class="btn grey-salsa btn-outline" *ngIf="warehouseInventory.isSaleConfirmButton" data-dismiss="modal">Cancel</a>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+              </form>
+              <form class="form-horizontal" (ngSubmit)="onSaveProduct(warehouseInventoryAddOrChangeProduct)" autocomplete="off" #warehouseInventoryAddOrChangeProduct="ngForm">
+                <div class="col-md-6">
+                  <div class="form-group">
+                    <label class="control-label col-md-3">Product
+                    </label>
+                    <div class="col-md-7" [ngClass]="{ 
+                      'has-error': (productId.errors && (productId.dirty || productId.touched)) 
+                      || (!productFormValid && productId.errors),
+                      'has-success': !vendorId.errors 
+                         }">
+                      <input type="text" [(ngModel)]="newProduct.productId" name="productId" #productId="ngModel" required class="hidden" />
+                      <div [hidden]="!isChangeProduct">
+                        <label>({{newProduct.productCode}}){{newProduct.productName}}</label>
+                      </div>
+                      <div [hidden]="isChangeProduct">
+                        <select class="form-control form-filter input-sm" id="product" style="width: 300px;">
+                        </select>
+                      </div>
+                      <span class="help-block" *ngIf="(productId.invalid && (productId.dirty  || productId.touched))
+                      || (!productFormValid && productId.errors)
+                      ">
+                        <p class="required" *ngIf="productId.errors.required">Product is required</p>
+                      </span>
+                    </div>
+                  </div>
+                  <ng-container *ngIf="newProduct.productId?.length>0">
+                    <div class="form-group">
+                      <label class="control-label col-md-3">Thông số
+                      </label>
+                      <div class="col-md-7">
+                        <div class="row">
+                          <label class="control-label col-md-2">Length(cm)</label>
+                          <div class="col-md-4">
+                            <input class="form-control input-sm" type="number" [(ngModel)]="newProduct.length" required maxlength="10" #newProductLength="ngModel"
+                              name="newProductLength" />
+                          </div>
+                          <label class="control-label col-md-2">Width(cm)</label>
+                          <div class="col-md-4">
+                            <input class="form-control input-sm" type="number" [(ngModel)]="newProduct.width" required maxlength="10" #newProductWidth="ngModel"
+                              name="newProductWidth" />
+                          </div>
+                        </div>
+                        <div class="row">
+                          <label class="control-label col-md-2">Height(cm)</label>
+                          <div class="col-md-4">
+                            <input class="form-control input-sm" type="number" [(ngModel)]="newProduct.height" required maxlength="10" #newProductHeight="ngModel"
+                              name="newProductHeight" />
+                          </div>
+                          <label class="control-label col-md-2">Weight(kg)</label>
+                          <div class="col-md-4">
+                            <input class="form-control  input-sm" type="number" [(ngModel)]="newProduct.weight" required maxlength="10" #newProductWeight="ngModel"
+                              name="newProductWeight" />
+                          </div>
+                        </div>
+                        <div class="row">
+                          <div class="col-md-12">
+                            <a href="#">Detail</a>
+                          </div>
+                        </div>
+                      </div>
+                    </div>
+                    <div class="form-group">
+                      <label class="control-label col-md-3">Product Status
+                        <span class="required"> * </span>
+                      </label>
+                      <div class="col-md-7">
+                        <select class="form-control form-filter input-sm" [(ngModel)]="newProduct.productStatus" name="productStatus" #productStatus="ngModel"
+                          required>
+                          <option *ngFor="let item of productStatuses" [ngValue]="item.value">{{item.text}}</option>
+                        </select>
+                      </div>
+                    </div>
+                    <div class="form-group">
+                      <label class="control-label col-md-3">Hạn sử dụng
+                      </label>
+                      <div class="col-md-7">
+                        <input id="outdate" class="form-control" type="text" [(ngModel)]="newProduct.outDate" name="outDate" #outDate="ngModel" />
+                      </div>
+                    </div>
+                    <div class="form-group">
+                      <label class="control-label col-md-3">Quantity
+                        <span class="required"> * </span>
+                      </label>
+                      <div class="col-md-7">
+                        <input class="form-control" type="number" [(ngModel)]="newProduct.quantity" name="quantity" #quantity="ngModel" (change)="onChangeQuantityIsOutOfStock()"
+                        />
+                      </div>
+                    </div>
+                    <div class="form-group">
+                      <label class="control-label col-md-3">IMEI
+                        <span class="required"> * </span>
+                      </label>
+                      <div class="col-md-4">
+                        <button type="button" (click)='onShowImeiForm()' class="btn btn-circle blue-steel btn-outline" [disabled]='!productSerialRequired'>
+                          <i class="fa fa-plus"></i> Click to input IMEI form</button>
+                        <div class="mt-checkbox-inline">
+                          <label class="mt-checkbox">
+                            <input type="checkbox" class="form-control" [(ngModel)]="productSerialRequired" name="serialRequired" #serialRequired="ngModel"
+                              disabled /> SerialRequired
+                            <span></span>
+                          </label>
+                        </div>
+                        <app-warehouse-inventory-add-or-change-imei #imei (reloadQuantityEvent)="onChangeQuantity($event)"></app-warehouse-inventory-add-or-change-imei>
+                      </div>
+                      <div class="col-md-3" *ngIf='newProduct.imeis?.length > 0'>
+                        Total imeis: {{newProduct.imeis?.length}}
+                      </div>
+                    </div>
+                    <div class="form-group">
+                      <label class="control-label col-md-3">Description
+                      </label>
+                      <div class="col-md-7">
+                        <input type="text" class="form-control" placeholder="Description" name="newProductDescription" [(ngModel)]="newProduct.description"
+                          maxlength="500" #newProductDescription="ngModel" />
+                      </div>
+                    </div>
+                  </ng-container>
+                  <div class="form-actions">
+                    <div class="row">
+                      <div class="col-md-offset-3 col-md-9">
+                        <button *ngIf="!isChangeProduct && warehouseInventory.isSaleConfirmButton" type="submit" class="btn green">Add</button>
+                        <a href="javascript:;" *ngIf="!isChangeProduct && warehouseInventory.isSaleConfirmButton" class="btn grey-salsa btn-outline">Clear</a>
+                        <button *ngIf="isChangeProduct" type="submit" class="btn green">Change</button>
+                        <a href="javascript:;" *ngIf="isChangeProduct" class="btn grey-salsa btn-outline" (click)="onChangeCancel()">Cancel</a>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+              </form>
+            </div>
+          </div>
+
+        </div>
+        <div class="row" style="height: 50px;"></div>
+        <div class="table-container">
+          <form (ngSubmit)="getWarehouse()" #f="ngForm" autocomplete="off">
+            <table class="table table-striped table-bordered table-hover table-checkable">
+              <thead>
+                <tr role="row" class="heading">
+                  <th>
+                  </th>
+                  <th>
+                    Product code
+                  </th>
+                  <th>
+                    Product name
+                  </th>
+                  <th>
+                    Quantity
+                  </th>
+                  <th>
+                    Product status
+                  </th>
+                  <th>
+                    Description
+                  </th>
+                  <th>
+                    Actions
+                  </th>
+                </tr>
+                <tr role="row" class="filter">
+                  <td>
+                  </td>
+                  <td>
+                    <input type="text" [(ngModel)]="warehouseInventoryDetailSearchProductParam" name="warehouseInventoryDetailSearchProductParam"
+                      #warehouseInventoryDetailSearchProduct="ngModel" class="hidden" />
+                    <select class="form-control form-filter input-sm" id="warehouseInventoryDetailSearchProduct" style="width: 300px;">
+                    </select>
+                    <!-- <a href="javascript:;" class="btn btn-outline green" (click)="onWarehouseInventoryDetailSearchProductClearValue()">
+                      <i class="fa fa-close"></i> Clear </a> -->
+                  </td>
+                  <td></td>
+                  <td></td>
+                  <td>
+                    <select class="form-control form-filter input-sm" [(ngModel)]="warehouseInventoryDetailSearchProductStatusParam" name="warehouseInventoryDetailSearchProductStatusParam"
+                      #warehouseInventoryDetailSearchProductStatus="ngModel">
+                      <option *ngFor="let item of productStatusesParam" [ngValue]="item.value">{{item.text}}</option>
+                    </select>
+                  </td>
+                  <td> </td>
+                  <td>
+                    <div class="margin-bottom-5">
+                      <button class="btn btn-sm yellow filter-submit margin-bottom" type="button" (click)="onSearchWarehouseInventoryDetail()">
+                        <i class="fa fa-search"></i> Search</button>
+                    </div>
+                  </td>
+                </tr>
+              </thead>
+              <tbody>
+                <tr *ngFor="let product of products | paginate: { itemsPerPage: pageSize, currentPage: pageIndex, totalItems: totalRow } ; let index = index ">
+                  <td>{{index + 1}}</td>
+                  <td>
+                    {{product.productCode}}
+                  </td>
+                  <td>
+                    {{product.productName}}
+                  </td>
+                  <td>
+                    {{product.quantity}}
+                  </td>
+                  <td>
+                    {{product.productStatusName}}
+                  </td>
+                  <td>
+                    {{product.description}}
+                  </td>
+                  <td>
+                    <a href="javascript:;" class="btn btn-circle btn-outline green" *ngIf="warehouseInventory.isSaleConfirmButton" (click)="onGetWarehouseInventoryDetail(product.id)">
+                      <i class="fa fa-pencil"></i> Edit </a>
+                    <a href="javascript:;" class="btn btn-circle btn-outline green" *ngIf="warehouseInventory.isAccountingButton" (click)="onShowAccountingForm(product.id, product.quantity)">
+                      <i class="fa fa-pencil"></i> Accounting </a>
+                    <!-- <a href="javascript:;" class="btn btn-circle btn-outline green" (click)="onShowAddOrChangeForm(warehouse.id)">
+                      <i class="fa fa-pencil"></i> Edit </a>
+                    <a href="javascript:;" class="btn btn-circle btn-outline 
+                    blue" [routerLink]="['/g/warehouse-detail/', warehouse.id]">
+                      <i class="fa fa-reorder"></i> Detail </a>
+                    <a href="javascript:;" class="btn btn-circle btn-outline red" (click)="onShowRemoveForm(warehouse.id)">
+                      <i class="fa fa-pencil"></i> Delete </a> -->
+                  </td>
+                  <app-warehouse-inventory-add-quantity #warehouseInventoryAddQuantity></app-warehouse-inventory-add-quantity>
+                </tr>
+              </tbody>
+            </table>
+            <pagination-controls (pageChange)="pageChanged($event)"></pagination-controls>
+          </form>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>

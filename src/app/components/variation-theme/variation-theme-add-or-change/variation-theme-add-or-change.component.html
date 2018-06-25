@@ -1,0 +1,50 @@
+<div id="variationtheme-edit" class="modal fade" tabindex="-1" role="dialog">
+  <div class="modal-dialog modal-lg">
+    <div class="modal-content">
+      <div class="modal-body" *ngIf="isFormInit">
+        <div class="row">
+          <div class="col-md-12">
+            <div class="portlet light portlet-fit portlet-form bordered">
+              <div class="portlet-title ">
+                <div class="caption">
+                  <i class="icon-settings font-red"></i>
+                  <span *ngIf="id?.length<=0" class="caption-subject font-red sbold uppercase">Add new VariationTheme</span>
+                  <span *ngIf="id?.length>0" class="caption-subject font-red sbold uppercase">Change VariationTheme</span>
+                </div>
+              </div>
+              <div class="portlet-body">
+                <form class="form-horizontal" (ngSubmit)="onSave(variationThemeEditForm)" autocomplete="off" #variationThemeEditForm="ngForm">
+                  <div class="form-body">
+                    <div class="form-group">
+                      <label class="control-label col-md-3">Name
+                        <span class="required"> (*) </span>
+                      </label>
+                      <div class="col-md-7" [ngClass]="{ 
+                            'has-error': name.errors && (name.dirty ||formValid && !name.dirty),
+                            'has-success': !name.errors}">
+                        <input type="text" class="form-control" placeholder="Name" name="name" [(ngModel)]="model.variationThemeName" required #name="ngModel"
+                        />
+                        <div class="help-block" *ngIf="name.errors && (name.dirty || formValid &&!name.dirty)">
+                          <span class="required" *ngIf="name.errors.required">Name is required</span>
+                        </div>
+                      </div>
+                    </div>
+                    
+                    <div class="row">
+                      <div class="col-md-10"></div>
+                      <div class="col-md-2">
+                        <button type="submit" class="btn btn-sm blue">
+                          <i class="fa fa-edit"></i> Save</button>
+                      </div>
+                    </div>
+                  </div>
+                </form>
+              </div>
+            </div>
+
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>

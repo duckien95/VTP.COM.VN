@@ -1,0 +1,14 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<svg width="40px" height="40px" viewBox="0 0 40 40" version="1.1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink">
+    <!-- Generator: Sketch 48.1 (47250) - http://www.bohemiancoding.com/sketch -->
+    <title>Radio</title>
+    <desc>Created with Sketch.</desc>
+    <defs></defs>
+    <g id="Icon" stroke="none" stroke-width="1" fill="none" fill-rule="evenodd">
+        <g id="Radio" fill="#00857F" fill-rule="nonzero">
+            <g id="ic-radio-button-unchecked-24px-copy" transform="translate(12.000000, 12.000000)">
+                <path d="M7.5,0 C3.36,0 0,3.36 0,7.5 C0,11.64 3.36,15 7.5,15 C11.64,15 15,11.64 15,7.5 C15,3.36 11.64,0 7.5,0 Z M7.5,13.5 C4.185,13.5 1.5,10.815 1.5,7.5 C1.5,4.185 4.185,1.5 7.5,1.5 C10.815,1.5 13.5,4.185 13.5,7.5 C13.5,10.815 10.815,13.5 7.5,13.5 Z" id="Shape"></path>
+            </g>
+        </g>
+    </g>
+</svg>

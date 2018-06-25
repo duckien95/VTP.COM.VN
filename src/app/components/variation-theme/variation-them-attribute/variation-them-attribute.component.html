@@ -1,0 +1,174 @@
+<div id="variation-theme-attribute" class="modal fade" tabindex="-1" role="dialog">
+  <div class="modal-dialog modal-lg">
+    <div class="modal-content">
+      <div class="modal-body" *ngIf="isFormInit">
+        <div class="row">
+          <div class="col-md-12">
+            <div class="portlet light portlet-fit portlet-form bordered">
+              <div class="portlet-title ">
+                <div class="caption">
+                  <i class="icon-settings font-red"></i>
+                  <span class="caption-subject font-red sbold uppercase">Attributes mapping</span>
+                </div>
+                <div class="actions">
+                  <a href="javascript:;" class="btn btn-circle blue-steel btn-outline" (click)="onShowAddNew()">
+                    <i class="fa fa-plus"></i> Add new </a>
+                </div>
+              </div>
+              <div class="portlet-body">
+                <form class="form-horizontal" (ngSubmit)="onSave(f)" autocomplete="off" #f="ngForm">
+                  <div class="form-body">
+                    <table class="table table-striped table-bordered table-hover table-checkable" id="datatable_ajax">
+                      <thead>
+                        <tr role="row" class="heading">
+                          <th>
+                            Identity
+                          </th>
+                          <th>
+                            Attibute name
+                          </th>
+                          <th>
+                            Attibute Type
+                          </th>
+                          <th>
+                            Unit
+                          </th>
+                          <th>
+                            Status
+                          </th>
+                          <th>
+                          </th>
+                        </tr>
+                      </thead>
+                      <tbody>
+                        <tr *ngIf="isShowAddNew">
+                          <td>
+                          </td>
+                          <td>
+                            <div>
+                              <input type="text" class="form-control hidden" name="attributeId" [(ngModel)]="model.attributeId" required minlength="1"
+                                maxlength="50" #attributeId="ngModel" />
+                              <select class="form-control form-filter input-sm" id="attributeAutocomplete" style="width: 300px;">
+                              </select>
+                              <span class="help-block" *ngIf="(model.attributeId == null) 
+                                        || ( model.attributeId == undefined ) 
+                                        || ( model.attributeId.length <= 0 )">
+                                <p class="required">Attribute is required</p>
+                              </span>
+                            </div>
+                          </td>
+                          <td>
+                            <select class="form-control" [(ngModel)]="model.attributeType" name="attributeType" #attributeType="ngModel" required>
+                              <option *ngFor="let item of attributeTypes" [ngValue]="item.value"> {{item.text}}</option>
+                            </select>
+                            <div class="help-block" *ngIf="attributeType.errors">
+                              <span class="required" *ngIf="attributeType.errors.required">Attribute Type is required</span>
+                            </div>
+                          </td>
+                          <td>
+                            <select class="form-control" [(ngModel)]="model.baseUnitId" name="baseUnitId" #baseUnitId="ngModel">
+                              <option value="" selected="selected"> Select one </option>
+                              <option *ngFor="let item of measureUnits" [ngValue]="item.value"> {{item.text}}</option>
+                            </select>
+                          </td>
+                          <td>
+                          </td>
+                          <td>
+                            <a href="javascript:;" title="Save" class="btn btn-circle btn-outline green" (click)="onSave(f)">
+                              <i class="fa fa-save"></i>
+                            </a>
+                            <a href="javascript:;" title="Cancel" class="btn btn-circle btn-outline red" (click)="onAddNewCancel()">
+                              <i class="fa fa-retweet"></i>
+                            </a>
+                          </td>
+                        </tr>
+                        <tr *ngFor="let item of models | paginate: {itemsPerPage: pageSize, currentPage: pageIndex, totalItems: totalRow } ; let i = index;let last = last">
+                          <td>
+                            {{i+1}}
+                          </td>
+                          <td>
+                            <ng-container *ngIf="!rowEdits.Item(i)">
+                              {{item.attributeName}}
+                            </ng-container>
+                            <ng-container *ngIf="rowEdits.Item(i)">
+                              <div>
+                                <input type="text" class="form-control hidden" name="attributeId" [(ngModel)]="model.attributeId" required minlength="1"
+                                  maxlength="50" #attributeId="ngModel" />
+                                <select class="form-control form-filter input-sm" id="attributeAutocomplete" style="width: 300px;">
+                                  <option value="{{model.attributeId}}" selected="selected">{{model.attributeName}}</option>
+                                </select>
+                                <span class="help-block" *ngIf="(model.attributeId == null) 
+                                                      || ( model.attributeId == undefined ) 
+                                                      || ( model.attributeId.length <= 0 )">
+                                  <p class="required">Attribute is required</p>
+                                </span>
+                              </div>
+                            </ng-container>
+                          </td>
+                          <td>
+                            <ng-container *ngIf="!rowEdits.Item(i)">
+                              {{item.attributeTypename}}
+                            </ng-container>
+                            <ng-container *ngIf="rowEdits.Item(i)">
+                              <select class="form-control" [(ngModel)]="model.attributeType" name="attributeType" #attributeType="ngModel" required>
+                                <option *ngFor="let item of attributeTypes" [ngValue]="item.value"> {{item.text}}</option>
+                              </select>
+                              <div class="help-block" *ngIf="attributeType.errors">
+                                <span class="required" *ngIf="attributeType.errors.required">Attribute Type is required</span>
+                              </div>
+                            </ng-container>
+                          </td>
+                          <td>
+                            <ng-container *ngIf="!rowEdits.Item(i)">
+                              {{item.baseUnitName}}
+                            </ng-container>
+                            <ng-container *ngIf="rowEdits.Item(i)">
+                              <select class="form-control" [(ngModel)]="model.baseUnitId" name="baseUnitId" #baseUnitId="ngModel">
+                                <option value=""> Select one </option>
+                                <option *ngFor="let item of measureUnits" [ngValue]="item.value"> {{item.text}}</option>
+                              </select>
+                            </ng-container>
+                          </td>
+                          <td>
+                            {{item.statusName}}
+                          </td>
+                          <td>
+                            <ng-container *ngIf="!rowEdits.Item(i)">
+                              <a href="javascript:;" title="Change" class="btn btn-circle btn-outline green" (click)="onShowChange(i)">
+                                <i class="fa fa-pencil"></i>
+                              </a>
+                              <button type="button" class="btn btn-circle btn-outline red fa fa-remove template_remove_bs_confirmation" data-toggle="confirmation"
+                                attr.tmpindex="{{i}}">
+                                <span *ngIf="last">{{onRegisterConfirmation()}}</span>
+                              </button>
+                            </ng-container>
+                            <ng-container *ngIf="rowEdits.Item(i)">
+                              <a href="javascript:;" title="Save" class="btn btn-circle btn-outline green" (click)="onSave(f)">
+                                <i class="fa fa-save"></i>
+                              </a>
+                              <a href="javascript:;" title="Cancel" class="btn btn-circle btn-outline red" (click)="onChangeCancel()">
+                                <i class="fa fa-retweet"></i>
+                              </a>
+                            </ng-container>
+                          </td>
+                        </tr>
+                      </tbody>
+                    </table>
+
+                    <div class="row">
+                      <div class="col-md-10"></div>
+                      <div class="col-md-2">
+
+                      </div>
+                    </div>
+                  </div>
+                </form>
+              </div>
+            </div>
+
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>

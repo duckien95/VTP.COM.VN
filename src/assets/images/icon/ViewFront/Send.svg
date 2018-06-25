@@ -1,0 +1,12 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<svg width="40px" height="40px" viewBox="0 0 40 40" version="1.1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink">
+    <!-- Generator: Sketch 48.1 (47250) - http://www.bohemiancoding.com/sketch -->
+    <title>Send</title>
+    <desc>Created with Sketch.</desc>
+    <defs></defs>
+    <g id="Icon" stroke="none" stroke-width="1" fill="none" fill-rule="evenodd">
+        <g id="Send" fill="#00857F" fill-rule="nonzero">
+            <path d="M27.7358153,11.1135575 L11.4391468,20.5124503 C10.8027504,20.8780019 10.8836185,21.7637614 11.5164988,22.0308952 L15.2540087,23.598549 L25.355482,14.6987746 C25.5488621,14.5265436 25.8231103,14.7901625 25.6578582,14.9905129 L17.1878098,25.3067996 L17.1878098,28.1363092 C17.1878098,28.96583 18.1898703,29.2927175 18.6821105,28.6916664 L20.9147717,25.9746341 L25.29571,27.8094217 C25.7949822,28.0203169 26.3645745,27.7074891 26.4559906,27.1697065 L28.9875119,11.9852573 C29.107056,11.2752437 28.3440836,10.7620656 27.7358153,11.1135575 Z" id="Shape"></path>
+        </g>
+    </g>
+</svg>

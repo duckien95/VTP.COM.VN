@@ -1,0 +1,120 @@
+<ng-container *ngIf="isShowAddNew">
+  <form (ngSubmit)="onSaveProduct(f)" #f="ngForm" autocomplete="off" class="form-horizontal">
+    <div id="warehouse-vendor-inventory-add-product.component" class="row">
+      <div class="form-body">
+        <div class="col-md-6">
+          <div class="form-group">
+            <label class="control-label col-md-3">Product
+            </label>
+            <div class="col-md-7">
+              <input type="text" [(ngModel)]="productId" name="productIdInWarehouseVendorInventoryAddProduct" #productIdValue="ngModel"
+                required class="hidden" />
+              <select class="form-control form-filter input-sm" id="productIdInWarehouseVendorInventoryAddProduct">
+                <option *ngIf="productSelected" selected="selected" value="{{productSelected.value}}">{{productSelected.text}}</option>
+              </select>
+              <span class="help-block" *ngIf="productIdValue.errors">
+                <p class="required">Please select Product</p>
+              </span>
+            </div>
+          </div>
+          <div class="form-group">
+            <label class="control-label col-md-3">Quantity
+            </label>
+            <div class="col-md-7">
+              <input class="form-control" type="number" [(ngModel)]="quantity" 
+              name="quantityValue" #quantityValue="ngModel" required [range]="[0, 1000000]"
+              />
+              <span class="help-block" *ngIf="quantityValue.errors?.range">
+                <p class="required">Quantity is range from 0 to 1000000</p>
+              </span>
+            </div>
+          </div>
+          <div class="form-group">
+            <label class="control-label col-md-3">SafetyStock
+            </label>
+            <div class="col-md-7">
+              <input class="form-control" type="number" [(ngModel)]="safetyStock" name="safetyStockValue" #safetyStockValue="ngModel" required
+              [range]="[0, 1000]" />
+              <span class="help-block" *ngIf="safetyStockValue.errors?.range">
+                <p class="required">SafetyStock is range from 0 to 1000</p>
+              </span>
+            </div>
+          </div>
+          <div class="form-group">
+            <label class="control-label col-md-3">SellPrice
+            </label>
+            <div class="col-md-7">
+              <input class="form-control" type="number" [(ngModel)]="sellPrice" name="sellPriceValue" #sellPriceValue="ngModel" required [min]="0"
+              />
+              <span class="help-block" *ngIf="sellPriceValue.errors?.min">
+                <p class="required">SellPrice min is 0</p>
+              </span>
+            </div>
+          </div>
+          <div class="form-group">
+            <label class="control-label col-md-3">Effective time
+            </label>
+            <div class="col-md-9">
+              <div id="effective_time" class="input-group input-large date-picker input-daterange" data-date="10/11/2012" data-date-format="mm/dd/yyyy">
+                <input type="text" class="form-control" name="from">
+                <span class="input-group-addon"> to </span>
+                <input type="text" class="form-control" name="to"> </div>
+              <span class="help-block" style="text-align: left"> Select date range </span>
+            </div>
+          </div>
+        </div>
+        <div class="col-md-6">
+          <div class="form-group">
+            <label class="control-label col-md-3">Vendor
+            </label>
+            <div class="col-md-7">
+              <input type="text" [(ngModel)]="vendorId" name="vendorIdInWarehouseVendorInventoryAddProduct" #vendorIdValue="ngModel" required
+                class="hidden" />
+              <select class="form-control form-filter input-sm" id="vendorIdInWarehouseVendorInventoryAddProduct">
+                <option *ngIf="vendorSelected" selected="selected" value="{{vendorSelected.value}}">{{vendorSelected.text}}</option>
+              </select>
+              <span class="help-block" *ngIf="vendorIdValue.errors">
+                <p class="required">Please select Vendor</p>
+              </span>
+            </div>
+          </div>
+          <div class="form-group">
+            <label class="control-label col-md-3">Warehouse
+            </label>
+            <div class="col-md-7">
+              <select class="form-control form-filter input-sm" id="warehouseIdInWarehouseVendorInventoryAddProduct" multiple="multiple">
+                <ng-container *ngIf="warehousesSelected">
+                  <option *ngFor="let item of warehousesSelected" selected="selected" value="{{item.value}}">{{item.text}}</option>
+                </ng-container>
+              </select>
+              <span class="help-block" *ngIf="warehouseIds?.length<=0">
+                <p class="required">Please select warehouse</p>
+              </span>
+            </div>
+          </div>
+          <div class="form-group">
+            <label class="control-label col-md-3">Select all warehouse
+            </label>
+            <div class="col-md-7">
+              <div class="mt-checkbox-inline" style="float: left;">
+                <label class="mt-checkbox">
+                  <input type="checkbox" name="isSelectAllWarehouFromVendor" (change)="onChangeSelectAllWarehouFromVendor()" class="form-control"
+                    [(ngModel)]="isSelectAllWarehouFromVendor" #isSelectAllWarehouFromVendorValue="ngModel" />
+                  <span></span>
+                </label>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+      <div class="form-actions">
+        <div class="row">
+          <div class="col-md-9">
+            <button type="submit" class="btn green">Save</button>
+            <button type="button" class="btn grey-salsa btn-outline" (click)="onHideAddNewProduct()">Cancel</button>
+          </div>
+        </div>
+      </div>
+    </div>
+  </form>
+</ng-container>

@@ -1,0 +1,45 @@
+<div class="row">
+    <div class="col-md-12">
+      <div class="portlet light portlet-fit portlet-datatable">
+        <div class="portlet-title portlet-title-action ">
+          <div class="caption">
+            <i class="icon-settings font-green"></i>
+            <span class="caption-subject font-red sbold uppercase">Đăng kí sản phẩm và ngành hàng</span>
+          </div>
+        </div>
+        <div class="portlet-body">
+          <div class="table-container">
+            <div class="form-body">
+              <div class="row">
+                <div class="col-md-12">
+                  <div class="form-group">
+                    <label class="control-label col-md-1">Nhà cung cấp
+                    </label>
+                    <div class="col-md-10">
+                      <select class="form-control" id="vendorSearch" style="width: 300px;">
+                      </select>
+                    </div>
+                    <div class="col-md-1">
+                      <button type="submit" class="btn green" (click)="onSearch()">Tìm kiếm</button>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+        <ngb-tabset *ngIf="isSearch">
+          <ngb-tab id="tab-1" title="Đăng kí ngành hàng">
+            <ng-template ngbTabContent>
+                <app-vendor-category-register #registerCategory [vendorId]="vendorId"></app-vendor-category-register>
+            </ng-template>
+          </ngb-tab>
+          <ngb-tab id="tab-2" title="Đăng kí bán sản phẩm">
+            <ng-template ngbTabContent>
+              <app-vendor-product-register #registerProduct [vendorId]="vendorId"></app-vendor-product-register>
+            </ng-template>
+          </ngb-tab>
+        </ngb-tabset>
+      </div>
+    </div>
+  </div>

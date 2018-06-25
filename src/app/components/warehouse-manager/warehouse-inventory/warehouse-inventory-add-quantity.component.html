@@ -1,0 +1,98 @@
+<div id="formAccounting" class="modal fade" tabindex="-1" role="dialog">
+  <div class="modal-dialog modal-lg">
+    <div class="modal-content">
+      <div class="modal-body">
+        <div class="row">
+          <div class="col-md-12">
+            <!-- BEGIN VALIDATION STATES-->
+            <div class="portlet light portlet-fit portlet-form bordered">
+              <div class="portlet-title ">
+                <div class="caption">
+                  <i class="icon-settings font-red"></i>
+                  <span class="caption-subject font-red sbold uppercase">Accounting</span>
+                </div>
+              </div>
+              <div class="portlet-body">
+                <!-- BEGIN FORM-->
+                <form class="form-horizontal" (ngSubmit)="onSubmit(vendorAddOrChange)" autocomplete="off" #vendorAddOrChange="ngForm">
+                  <div class="form-body">
+                    <table class="table table-bordered" id="table_variants">
+                      <thead>
+                        <tr>
+                          <th rowspan="2" style="width:8%"></th>
+                          <th rowspan="2" style="width:23%">STT</th>
+                          <th rowspan="2" style="width:23%">SellPrice</th>
+                          <th rowspan="2" style="width:23%">OriginPrice</th>
+                          <th rowspan="2" style="width:23%">Quantity({{totalQuantity}})</th>
+                        </tr>
+                      </thead>
+                      <tbody>
+                        <ng-container *ngFor="let item of warehouseInventoryPrices; let x = index" [attr.data-index]="x">
+                          <tr>
+                            <td class="text-center">
+                              <button type="button" class="btn btn-sm btn-danger" title="Xóa" (click)="onRemove(x);">
+                                <i class="fa fa-times"></i>
+                              </button>
+                            </td>
+                            <td>{{x + 1}}</td>
+                            <td>
+                              <input type="number" class="form-control" placeholder="Nhập giá bán" name="pricee_{{x}}" [(ngModel)]="item.price" #price="ngModel"
+                                number [range]="[0, 10000000000]" required onkeydown="javascript: return event.keyCode == 69 ? false : true"
+                              />
+                              <span class="help-block" *ngIf="price.errors">
+                                <p class="required" *ngIf="price.errors?.number">Price type is number</p>
+                                <p class="required" *ngIf="price.errors?.range">Price range from 0 to 10,000,000,000</p>
+                                <p class="required" *ngIf="price.errors?.required">Price is required</p>
+                              </span>
+                            </td>
+                            <td>
+                              <input type="number" class="form-control" placeholder="Nhập giá gốc" name="originPrice_{{x}}" [(ngModel)]="item.originPrice"
+                                #originPrice="ngModel" number [range]="[0, 10000000000]" required onkeydown="javascript: return event.keyCode == 69 ? false : true"
+                              />
+                              <span class="help-block" *ngIf="originPrice.errors">
+                                <p class="required" *ngIf="originPrice.errors?.number">OriginPrice type is number</p>
+                                <p class="required" *ngIf="originPrice.errors?.range">OriginPrice range from 0 to 10,000,000,000</p>
+                                <p class="required" *ngIf="originPrice.errors?.required">OriginPrice is required</p>
+                              </span>
+                            </td>
+                            <td>
+                              <input type="number" class="form-control" placeholder="Nhập số lượng" name="quantity_{{x}}" [(ngModel)]="item.quantity" #quantity="ngModel"
+                                number [range]="[1, 1000000000]" required onkeydown="javascript: return event.keyCode == 69 ? false : true"
+                              />
+                              <span class="help-block" *ngIf="quantity.errors">
+                                <p class="required" *ngIf="quantity.errors?.number">Quantity type is number</p>
+                                <p class="required" *ngIf="quantity.errors?.range">Quantity range from 1 to 1,000,000,000</p>
+                                <p class="required" *ngIf="quantity.errors?.required">Quantity is required</p>
+                              </span>
+                            </td>
+                          </tr>
+                        </ng-container>
+                      </tbody>
+                    </table>
+                    <div class="form-group">
+                      <div class="col-md-11 text-right">
+                        <button type="button" id="btnSearch" class="btn btn-sm btn-success" (click)="onAddItem();">
+                          <i class="fa fa-plus fa-fw"></i>Thêm loại</button>
+                      </div>
+                    </div>
+                  </div>
+                  <div class="form-actions">
+                    <div class="row">
+                      <div class="col-md-offset-3 col-md-9">
+                        <button type="submit" class="btn green">Save</button>
+                        <button type="button" class="btn grey-salsa btn-outline" data-dismiss="modal">Cancel</button>
+                      </div>
+                    </div>
+                  </div>
+
+                </form>
+                <!-- END FORM-->
+              </div>
+            </div>
+            <!-- END VALIDATION STATES-->
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>

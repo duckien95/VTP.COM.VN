@@ -1,0 +1,74 @@
+<div class="portlet-body">
+  <div class="table-container">
+    <div class="form-body">
+      <div class="row">
+        <div class="col-md-12">
+          <div class="col-md-3">
+            <div class="input-group">
+              <span class="input-group-btn" style="font-size: 14px;">Tìm kiếm:&nbsp;</span>
+              <input type="text" class="form-control" id="search" />
+              <div class="input-group-btn">
+                <button class="btn green" id="clear">Clear</button>
+              </div>
+            </div>
+            <div id="jsCategoryTree"></div>
+          </div>
+          <div class="col-md-9">
+            <div class="tabbable-custom ">
+              <ul class="nav nav-tabs ">
+                <li class="active">
+                  <a href="#tab_5_1" data-toggle="tab"> Thông tin triết khấu</a>
+                </li>
+              </ul>
+              <div class="tab-content">
+                <table class="table table-bordered" id="table_variants">
+                  <thead>
+                    <tr>
+                      <th rowspan="2" style="width:2%">STT</th>
+                      <th rowspan="2">Tên ngành hàng</th>
+                      <th rowspan="2" style="width:15%">% Hoa hồng</th>
+                      <th rowspan="2" style="width:4%"></th>
+                    </tr>
+                  </thead>
+                  <tbody>
+                    <ng-container *ngFor="let item of commissions | paginate: { itemsPerPage: pageSize, currentPage: pageIndex, totalItems: totalRow }; let x = index"
+                      [attr.data-index]="x">
+                      <tr>
+                        <td>{{(pageIndex - 1) * pageSize + x + 1}}</td>
+                        <td>
+                          <input type="text" class="form-control" id="categoryName_{{x}}" name="categoryName_{{x}}" value="{{item.categoryName}}" readonly/>
+                        </td>
+                        <td>
+                          <input type="text" class="form-control" placeholder="Nhập % hoa hồng" id="commission_{{x}}" name="commission_{{x}}" value="{{item.commission}}"
+                          />
+                        </td>
+                        <td>
+                          <a href="javascript:;" title="Ngừng bán" class="btn btn-circle btn-outline red" *ngIf="item.isShowStopSellButton" (click)="onChangeStatus(item.id, 3)">
+                            <i class="fa fa-close"></i>
+                          </a>
+                          <a href="javascript:;" title="Đăng kí" class="btn btn-circle btn-outline yellow" *ngIf="item.isShowRegisterButton" (click)="onChangeStatus(item.id, 1)">
+                            <i class="fa fa-edit"></i>
+                          </a>
+                          <a href="javascript:;" title="Duyệt" class="btn btn-circle btn-outline green" *ngIf="item.isShowActiveButton" (click)="onChangeStatus(item.id, 2)">
+                            <i class="fa fa-check"></i>
+                          </a>
+                        </td>
+                      </tr>
+                    </ng-container>
+                  </tbody>
+                </table>
+                <pagination-controls (pageChange)="pageIndex = $event"></pagination-controls>
+                <div class="row" style="margin-top:15px">
+                  <div class="col-md-12 text-right">
+                    <button class="btn btn-success" (click)="onSaveRegisterCategory()">
+                      <i class='fa fa-spinner fa-spin'></i> Lưu</button>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>

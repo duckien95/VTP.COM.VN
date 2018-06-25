@@ -1,0 +1,319 @@
+<div class="vtp-wrap-content">
+    <!--___________________________________________________Slider______________________________________________________________-->
+    <div class="vtp-slider">
+        <div class="item"  *ngFor="let imgItem of ListImageItem;">
+            <img class="img-responsive" src="/assets/images/{{ imgItem.img_src }}" alt="slide-image" />
+        </div>
+    </div>
+    <!--__________________________________________White box in the middle of Slider and Service List___________________________-->
+    <div class="vtp-wrap-box-item clearfix wow fadeIn">
+        <div class="box-item col-xs-12 col-sm-12 col-md-4">
+            <img class="img-responsive" src="/assets/images/icon/ViewFront/1.png" alt="box-item-image" />
+            <span class="title">Kiểm tra đơn hàng</span>
+            <input class="form-control input-check1" placeholder="Mã theo dõi đơn hàng" />
+        </div>
+        <div class="box-item col-xs-12 col-sm-12 col-md-4">
+            <img class="img-responsive" src="/assets/images/icon/ViewFront/2.png" alt="box-item-image" />
+            <div class="clear-0"></div>
+            <span class="title">Kiểm tra phí vận chuyển</span>
+            <div class="clear-0"></div>
+            <div class="item" >
+                <input type="radio" id="test1" name="radio-group" [value]="1" [(ngModel)]="type">
+                <label class="item-package" for="test1">Trong nước</label>
+            </div>
+            <div class="item">
+                <input type="radio" id="test2" name="radio-group" [value]="2" [(ngModel)]="type">
+                <label class="item-mail" for="test2">Quốc tế</label>
+            </div>
+            <div class="clear-0"></div>
+            <div class="item-details" for="test1">
+                <div class="row mb-10">
+                    <div class="col-md-6">
+                        <select class="form-control" [(ngModel)]="sender_province" (change)="changeProvinceSender()" [ngModelOptions]="{standalone:true}">
+                            <option value="">Chọn tỉnh đi</option>
+                            <ng-template ngFor let-province [ngForOf]="ListProvince">
+                                <option  [value]="province.PROVINCE_ID" [selected]="sender_province == province.PROVINCE_ID">{{province.PROVINCE_NAME}}</option>
+                            </ng-template>
+                        </select>
+                    </div>
+                    <div class="col-md-6">
+                        <select class="form-control" [(ngModel)]="sender_district" [ngModelOptions]="{standalone:true}">
+                            <option value="" [selected]="sender_district < 0">Chọn huyện đi</option>
+                            <ng-template ngFor let-district [ngForOf]="ListDistrictSender">
+                                <option  [value]="district.DISTRICT_ID" [selected]="sender_district == district.DISTRICT_ID">{{district.DISTRICT_NAME}}</option>
+                            </ng-template>
+                        </select>
+                    </div>
+                </div>
+
+                <div class="row mb-10">
+                    <div class="col-md-6">
+                        <select class="form-control" [(ngModel)]="receiver_province" (change)="changeProvinceReceiver()" [ngModelOptions]="{standalone:true}">
+                            <option value="">Chọn tỉnh đến</option>
+                            <ng-template ngFor let-province [ngForOf]="ListProvince">
+                                <option  [value]="province.PROVINCE_ID" [selected]="receiver_province == province.PROVINCE_ID">{{province.PROVINCE_NAME}}</option>
+                            </ng-template>
+                        </select>
+                    </div>
+                    <div class="col-md-6">
+                        <select class="form-control" [(ngModel)]="receiver_district" [ngModelOptions]="{standalone:true}">
+                            <option value="">Chọn huyện đến</option>
+                            <ng-template ngFor let-district [ngForOf]="ListDistrictReceiver">
+                                <option  [value]="district.DISTRICT_ID" [selected]="receiver_district == district.DISTRICT_ID">{{district.DISTRICT_NAME}}</option>
+                            </ng-template>
+                        </select>
+                    </div>
+                </div>
+                <div class="row mb-10">
+                    <div class="col-md-12">
+                        <select class="form-control" [(ngModel)]="product_type" [ngModelOptions]="{standalone:true}">
+                            <option value="">Chọn loại hàng hóa</option>
+                            <option value="HH">Hàng hóa</option>
+                            <option value="TH">Thư</option>
+                        </select>
+                    </div>
+                </div>
+
+                <!-- <input class="form-control input-2" placeholder="Điểm đi" /> -->
+                <!-- <a class="arrow">
+                    <img class="img-responsive" src="/assets/images/arrow-down-348Normal.png" alt="box-item-image" />
+                </a> -->
+                <!-- <input class="form-control input-2" placeholder="Điểm đến" /> -->
+                <input class="form-control input-3" type="number" [(ngModel)]="product_weight" placeholder="Khối lượng" />
+                <input class="form-control input-3" type="number" [(ngModel)]="money_collection" placeholder="Số tiền thu hộ" />
+                <!-- <div class="input-group">
+                    <input type="text" class="long form-control" placeholder="Dài (cm)">
+                    <input type="text" class="width form-control" placeholder="Rộng (cm)">
+                    <input type="text" class="height form-control" placeholder="Cao (cm)">
+
+                </div> -->
+                <!-- <select class="select-services form-control">
+                </select> -->
+                <button class="btn btn-default mb-10"  (click)="getAllPrice()">Kiểm tra</button>
+
+                <table *ngIf="ListFee == null || ListFee == undefined" class="table table-bordered">
+                    <thead>
+                        <tr>
+                            <th>Tên gói</th>
+                            <th>Thời gian</th>
+                            <th>Chi phí</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+
+                        <ng-template ngFor let-fee [ngForOf]="ListFee">
+                            <tr class="list-fee">
+                                <td>{{ fee.TEN_DICHVU }}</td>
+                                <td>{{ fee.THOI_GIAN }}</td>
+                                <td>{{ fee.GIA_CUOC }}</td>
+                            </tr>
+                        </ng-template>
+
+                    </tbody>
+                </table>
+                <a class="close-popup"><i class="fa fal fa-arrow-alt-circle-up"></i></a>
+            </div>
+            <div class="item-details" for="test2" >
+                <div class="row mb-10">
+                    <div class="col-md-6">
+                        <select class="form-control" [(ngModel)]="sender_province" (change)="changeProvinceSender()" [ngModelOptions]="{standalone:true}">
+                            <option value="">Chọn tỉnh đi</option>
+                            <ng-template ngFor let-province [ngForOf]="ListProvince">
+                                <option  [value]="province.PROVINCE_ID" [selected]="sender_province == province.PROVINCE_ID">{{province.PROVINCE_NAME}}</option>
+                            </ng-template>
+                        </select>
+                    </div>
+                    <div class="col-md-6">
+                        <select class="form-control" [(ngModel)]="sender_district" [ngModelOptions]="{standalone:true}">
+                            <option value="">Chọn huyện đi</option>
+                            <ng-template ngFor let-district [ngForOf]="ListDistrictSender">
+                                <option  [value]="district.DISTRICT_ID" [selected]="sender_district == district.DISTRICT_ID">{{district.DISTRICT_NAME}}</option>
+                            </ng-template>
+                        </select>
+                    </div>
+                </div>
+
+                <div class="row mb-10">
+                    <div class="col-md-6">
+                        <select class="form-control" [(ngModel)]="receiver_country" (change)="changeCountryReceiver()" [ngModelOptions]="{standalone:true}">
+                            <option value="">Chọn quốc gia</option>
+                            <ng-template ngFor let-ListCountry [ngForOf]="ListCountry">
+                                <option  [value]="" [selected]="receiver_country">Country</option>
+                            </ng-template>
+                        </select>
+                    </div>
+                </div>
+                <input class="form-control input-3" [(ngModel)]="product_weight" placeholder="Khối lượng" />
+                <input class="form-control input-3" [(ngModel)]="money_collection" placeholder="Số tiền thu hộ" />
+                <div class="input-group">
+                    <input type="text" class="long form-control" placeholder="Dài (cm)">
+                    <input type="text" class="width form-control" placeholder="Rộng (cm)">
+                    <input type="text" class="height form-control" placeholder="Cao (cm)">
+
+                </div>
+                <!-- <button class="btn btn-check"  (click)="getAllPrice()">Kiểm tra</button> -->
+                <div class="button-bar inline">
+
+                    <div class="checkAmount">
+                        <span>Chi phí vận chuyển tạm tính</span>
+                        <div class="clear-0"></div>
+                    </div>
+                    <a class="btn btn-check">Kiểm tra</a>
+                    <a class="amount">130.000đ</a>
+                    <a class="btn btn-create">Tạo đơn hàng</a>
+                </div>
+                <a class="close-popup"><i class="fa fal fa-arrow-alt-circle-up"></i></a>
+            </div>
+        </div>
+
+        <div class="box-item col-xs-12 col-sm-12 col-md-4">
+            <img class="img-responsive" src="/assets/images/icon/ViewFront/3.png" alt="box-item-image" />
+            <span class="title">Tìm kiếm bưu cục</span>
+            <input class="form-control input-check3" placeholder="Vị trí của bạn" />
+        </div>
+    </div>
+
+</div>
+<div class="clear-0"></div>
+
+<!--________________________________________________________List service section _______________________________________________-->
+<div class="vtp-services">
+    <div class="container no-padding">
+        <h2 class="title wow fadeIn"> Dịch vụ nổi bật</h2>
+        <div class="description wow fadeInLeft">
+            Các bưu gửi thông qua chuyển phát nhanh không chỉ được đảm bảo về tốc độ và còn được đảm bảo về độ an toàn nếu địa chỉ người nhận chính xác , bưu phẩm sẽ được giao tận tay . có chũ ký , họ tên của người đã nhận và thời gian nhận
+        </div>
+        <div class="list-item row">
+            <div class="box col-xs-12 col-sm-6 col-md-3 wow bounceInLeft">
+                <a href="#">
+                    <div class="content hvr-sweep-to-left">
+                        <div class="image">
+                            <img class="img-responsive green-rec" src="/assets/images/rec1.png" alt="box-item-image" />
+                            <img class="img-responsive white-oval" src="/assets/images/oval2.png" alt="box-item-image" />
+                            <img class="img-responsive green-oval" src="/assets/images/oval1.png" alt="box-item-image" />
+                        </div>
+                        <div class="description">
+                            Dịch vụ hoả tốc
+                        </div>
+                    </div>
+                </a>
+
+
+            </div>
+            <div class="box col-xs-12 col-sm-6 col-md-3 wow bounceInLeft">
+                <a>
+                    <div class="content hvr-sweep-to-top">
+
+                        <div class="image">
+                            <img class="img-responsive green-rec" src="/assets/images/rec1.png" alt="box-item-image" />
+                            <img class="img-responsive white-oval" src="/assets/images/oval2.png" alt="box-item-image" />
+                            <img class="img-responsive green-oval" src="/assets/images/oval1.png" alt="box-item-image" />
+                        </div>
+                        <div class="description">
+                            Chuyển liên tỉnh
+                        </div>
+                    </div>
+                </a>
+
+            </div>
+            <div class="box col-xs-12 col-sm-6 col-md-3 wow bounceInRight">
+                <a>
+                    <div class="content hvr-sweep-to-bottom">
+
+                        <div class="image">
+                            <img class="img-responsive green-rec" src="/assets/images/rec1.png" alt="box-item-image" />
+                            <img class="img-responsive white-oval" src="/assets/images/oval2.png" alt="box-item-image" />
+                            <img class="img-responsive green-oval" src="/assets/images/oval1.png" alt="box-item-image" />
+                        </div>
+                        <div class="description">
+                            Dịch vụ chuyển phát quốc tế
+                        </div>
+                    </div>
+                </a>
+
+            </div>
+            <div class="box col-xs-12 col-sm-6 col-md-3 wow bounceInRight">
+                <a>
+                    <div class="content hvr-sweep-to-right">
+                        <div class="image">
+                            <img class="img-responsive green-rec" src="/assets/images/rec1.png" alt="box-item-image" />
+                            <img class="img-responsive white-oval" src="/assets/images/oval2.png" alt="box-item-image" />
+                            <img class="img-responsive green-oval" src="/assets/images/oval1.png" alt="box-item-image" />
+                        </div>
+                        <div class="description">
+                            Dịch Vụ Phát Hàng Thu Tiền (COD)
+                        </div>
+                    </div>
+                </a>
+
+            </div>
+
+        </div>
+        <div class="clear-40"></div>
+        <a class="btn btn-view-all hvr-underline-from-right" href="/services">Xem toàn bộ dịch vụ</a>
+    </div>
+</div>
+<div class="clear-0"></div>
+<!--________________________________________________________Download apps section_______________________________________________-->
+<div class="vtp-download-app">
+    <div class="container">
+        <div class="content">
+            <h2 class="title wow fadeInRight">Tải về ứng dụng trên nền tảng di động</h2>
+            <span class="description wow flipInX">
+                Bạn sẽ nhận được những thông báo quá trình vận chuyển hàng của bạn đang trong giai đoạn nào . Bạn sẽ cảm thấy yên tâm hơn về chuyến hàng và bạn có thể báo cáo ngay lập tức để chúng tôi khắc phục sự cố và giúp bạn sớm nhận được hàng
+            </span>
+            <div class="clear-0"></div>
+            <div class="list-app wow bounceInLeft">
+                <a>
+                    <img class="img-responsive" src="/assets/images/AppleStoreNormal.png" alt="apple-app" />
+                </a>
+                <a>
+                    <img class="img-responsive" src="/assets/images/GooglePlayNormal.png" alt="google-play" />
+                </a>
+            </div>
+            <div class="clear-0"></div>
+        </div>
+    </div>
+
+</div>
+<div class="clear-0"></div>
+<!--________________________________________________________Support chat bot section____________________________________________-->
+<div class="vtp-chat-bot">
+    <div class="container">
+        <div class="col-xs-12 col-sm-6 left-content">
+            <h2 class="title wow fadeInLeft">Hỗ trợ tạo đơn hàng qua Chatbot</h2>
+            <div class="clear-20"></div>
+            <span class="description wow fadeInLeft">
+                Bạn sẽ nhận được những thông báo quá trình vận chuyển hàng của bạn đang trong giai đoạn nào . Bạn sẽ cảm thấy yên tâm hơn về chuyến hàng và bạn có thể báo cáo ngay lập tức để chúng tôi khắc phục sự cố và giúp bạn sớm nhận được hàng
+            </span>
+            <div class="clear-0"></div>
+            <a class="btn btn-trial hvr-bounce-to-right wow fadeInUp">Dùng thử ngay</a>
+        </div>
+        <div class="col-xs-12 col-sm-6 right-content wow bounceInRight">
+            <img class="img-responsive" src="/assets/images/bg-chatbot2.png" alt="chatbot" />
+        </div>
+    </div>
+
+</div>
+<div class="clear-0"></div>
+
+<!--_______________________________________________________Group________________________________________________________________-->
+<div class="vtp-group">
+    <div class="container">
+        <div class="content">
+            <h2 class="title wow fadeIn">Điều chuyển từ tài liệu cho doanh nghiệp</h2>
+            <div class="description wow fadeInLeftBig">
+                Khi bạn phải chuyển quá nhiều đơn hàng ở mỗi trụ sở và không thể kiếm soát nổi , bạn gặp bối rối . Đã có chúng tôi giải quyết vấn đề đó cho bạn . Quản lý đơn hàng cũng như quản lý dòng tiền giúp bạn dễ dàng hơn trong kinh doanh
+            </div>
+            <div class="clear-0"></div>
+            <a class="btn btn-readmore hvr-bounce-to-right wow fadeInUp">Xem thêm</a>
+        </div>
+    </div>
+</div>
+<div class="clear-0"></div>
+<script type="text/javascript">
+    $(".vtp-slider").slick({
+        autoplay: true,
+        infinite: true
+    });
+</script>

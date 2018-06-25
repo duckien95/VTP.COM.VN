@@ -1,0 +1,66 @@
+<div id="imeiForm" class="modal fade" tabindex="-1" role="dialog">
+  <div class="modal-dialog modal-lg">
+    <div class="modal-content">
+      <div class="modal-body">
+        <div class="row">
+          <div class="col-md-12">
+            <div class="portlet light portlet-fit portlet-form bordered">
+              <div class="portlet-title ">
+                <div class="caption">
+                  <i class="icon-settings font-red"></i>
+                  <span class="caption-subject font-red sbold uppercase">Change Imeis</span>
+                </div>
+              </div>
+              <div class="portlet-body">
+                <div class="form-body">
+                  <div class="row">
+                    <div class="form-group">
+                      <label class="control-label col-md-3">Imei
+                      </label>
+                      <div class="col-md-4">
+                        <input type="text" class="form-control" placeholder="New Imei" name="newImei" [(ngModel)]="newImei" #imei="ngModel" />
+                      </div>
+                      <div class="col-md-4">
+                        <a href="javascript:;" (click)='onAddNewImei()' class="btn btn-circle blue-steel btn-outline">
+                          <i class="fa fa-plus"></i> Add </a>
+                      </div>
+                    </div>
+                  </div>
+                  <div class="row">
+                    <div class="col-md-12">
+                      <span class="select2 select2-container select2-container--bootstrap select2-container--below select2-container--focus" dir="ltr">
+                        <span class="selection">
+                          <span class="select2-selection select2-selection--multiple" role="combobox" aria-haspopup="true" aria-expanded="false" tabindex="-1">
+                            <ul class="select2-selection__rendered">
+                              <ng-container *ngFor="let imei of imeis;let index = index">
+                                <li class="select2-selection__choice" title="{{imei}}">
+                                  <span class="select2-selection__choice__remove" role="presentation" (click)='onRemoveImei(index)' >×</span>{{imei}}
+                                </li>
+                              </ng-container>
+
+                              <!-- <li class="select2-selection__choice" title="Nevada">
+                                <span class="select2-selection__choice__remove" role="presentation">×</span>Nevada</li> -->
+                            </ul>
+                          </span>
+                        </span>
+                        <span class="dropdown-wrapper" aria-hidden="true"></span>
+                      </span>
+                    </div>
+                  </div>
+                </div>
+                <div class="form-actions">
+                  <div class="row">
+                    <div class="col-md-offset-3 col-md-9">
+                      <button type="button" class="btn green" data-dismiss="modal" (click)="onOk()">OK</button>
+                      <!-- <button type="button" class="btn grey-salsa btn-outline" data-dismiss="modal">Cancel</button> -->
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
