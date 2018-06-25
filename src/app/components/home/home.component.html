@@ -30,7 +30,7 @@
                 <div class="row mb-10">
                     <div class="col-md-6">
                         <select class="form-control" [(ngModel)]="sender_province" (change)="changeProvinceSender()" [ngModelOptions]="{standalone:true}">
-                            <option value="">Chọn tỉnh đi</option>
+                            <option value="-1">Chọn tỉnh đi</option>
                             <ng-template ngFor let-province [ngForOf]="ListProvince">
                                 <option  [value]="province.PROVINCE_ID" [selected]="sender_province == province.PROVINCE_ID">{{province.PROVINCE_NAME}}</option>
                             </ng-template>
@@ -38,7 +38,7 @@
                     </div>
                     <div class="col-md-6">
                         <select class="form-control" [(ngModel)]="sender_district" [ngModelOptions]="{standalone:true}">
-                            <option value="" [selected]="sender_district < 0">Chọn huyện đi</option>
+                            <option value="-1" [selected]="sender_district < 0">Chọn huyện đi</option>
                             <ng-template ngFor let-district [ngForOf]="ListDistrictSender">
                                 <option  [value]="district.DISTRICT_ID" [selected]="sender_district == district.DISTRICT_ID">{{district.DISTRICT_NAME}}</option>
                             </ng-template>
@@ -49,7 +49,7 @@
                 <div class="row mb-10">
                     <div class="col-md-6">
                         <select class="form-control" [(ngModel)]="receiver_province" (change)="changeProvinceReceiver()" [ngModelOptions]="{standalone:true}">
-                            <option value="">Chọn tỉnh đến</option>
+                            <option value="-1">Chọn tỉnh đến</option>
                             <ng-template ngFor let-province [ngForOf]="ListProvince">
                                 <option  [value]="province.PROVINCE_ID" [selected]="receiver_province == province.PROVINCE_ID">{{province.PROVINCE_NAME}}</option>
                             </ng-template>
@@ -57,7 +57,7 @@
                     </div>
                     <div class="col-md-6">
                         <select class="form-control" [(ngModel)]="receiver_district" [ngModelOptions]="{standalone:true}">
-                            <option value="">Chọn huyện đến</option>
+                            <option value="-1">Chọn huyện đến</option>
                             <ng-template ngFor let-district [ngForOf]="ListDistrictReceiver">
                                 <option  [value]="district.DISTRICT_ID" [selected]="receiver_district == district.DISTRICT_ID">{{district.DISTRICT_NAME}}</option>
                             </ng-template>
@@ -117,7 +117,7 @@
                 <div class="row mb-10">
                     <div class="col-md-6">
                         <select class="form-control" [(ngModel)]="sender_province" (change)="changeProvinceSender()" [ngModelOptions]="{standalone:true}">
-                            <option value="">Chọn tỉnh đi</option>
+                            <option value="-1">Chọn tỉnh đi</option>
                             <ng-template ngFor let-province [ngForOf]="ListProvince">
                                 <option  [value]="province.PROVINCE_ID" [selected]="sender_province == province.PROVINCE_ID">{{province.PROVINCE_NAME}}</option>
                             </ng-template>
@@ -125,7 +125,7 @@
                     </div>
                     <div class="col-md-6">
                         <select class="form-control" [(ngModel)]="sender_district" [ngModelOptions]="{standalone:true}">
-                            <option value="">Chọn huyện đi</option>
+                            <option value="-1">Chọn huyện đi</option>
                             <ng-template ngFor let-district [ngForOf]="ListDistrictSender">
                                 <option  [value]="district.DISTRICT_ID" [selected]="sender_district == district.DISTRICT_ID">{{district.DISTRICT_NAME}}</option>
                             </ng-template>

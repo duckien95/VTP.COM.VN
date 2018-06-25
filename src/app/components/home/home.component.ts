@@ -18,10 +18,10 @@ export class HomeComponent implements OnInit {
   ListCountry: any;
   ListFee: any;
 
-  sender_district: number = '';
-  sender_province: number = '';
-  receiver_district: number = '';
-  receiver_province: number = '';
+  sender_district: number = -1;
+  sender_province: number = -1;
+  receiver_district: number = -1;
+  receiver_province: number = -1;
   receiver_country: string = '';
   product_type: string = '';
   product_weight: number;
@@ -31,7 +31,6 @@ export class HomeComponent implements OnInit {
 
   ngOnInit() {
     this.ListImageItem = [{'img_src': 'bgSlide1.png'}, { 'img_src' : 'bgSlide2.png'}];
-    this.sender_province = '';
     this.ListService = [
         { 'service_name': 'Dịch vụ hỏa tốc', 'service_url': '', 'class': 'hvr-sweep-to-left'  },
         { 'service_name': 'Chuyển liên tỉnh', 'service_url': '','class': 'hvr-sweep-to-top'   },
