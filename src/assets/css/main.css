@@ -1066,13 +1066,25 @@ textarea {
             font-family: OpenSansBold;
         }
 
-        .vtp-wrap-box-item .box-item > input {
+        .vtp-wrap-box-item .box-item > input
+         {
             margin-top: 25px;
             border-radius: 3px;
             height: 60px;
             font-size: 16px;
             font-family: Muli;
             color: #b2b2b2;
+        }
+
+        .btn-post-office{
+            margin-top: 25px;
+            border-radius: 3px;
+            height: 60px;
+            font-size: 16px;
+            font-family: Muli;
+            /* color: #b2b2b2; */
+            background: #00857f;
+            color: #fff;
         }
 
             .vtp-wrap-box-item .box-item > input.input-check1 {
@@ -2583,6 +2595,23 @@ textarea {
         vertical-align: middle;
     }
 
+    .vtp-check-order .table-price tbody tr td {
+        text-align: center !important;
+        font-family: Muli;
+        font-size: 16px;
+        vertical-align: middle;
+    }
+
+    .vtp-check-order .table-price tbody tr td:first-child {
+        text-align: center;
+        color: #00857f;
+        font-weight: bold;
+    }
+
+    .vtp-check-order .table-price tbody tr td:last-child {
+        text-align: left !important;
+    }
+
 .vtp-check-order .container {
     padding: 0px;
 }
@@ -2664,6 +2693,13 @@ textarea {
                 opacity: 0.7;
             }
 
+.vtp-post-office {
+    padding: 50px 0 0;
+}
+
+.list-post-office {
+    overflow-y: scroll;
+}
 .process-list {
     display: table;
     table-layout: fixed;

@@ -1,67 +1,86 @@
-    <!--_________________________________________________________Header____________________________________________________________-->
+    <!--_________________________________________________________________________________________________________________-->
     <div class="vtp-mobile-menu-overlay dts-hide-pc"></div>
-    <div class="vtp-header-left-block">
-        <img class="vtp-header-left-block-logo" src="/assets/images/logoNormal.png" alt="logo">
-        <ul class="clearfix">
-            <li>
-                <a class="active">Trang chủ</a>
-            </li>
-            <li>
-                <a href="/services">Dịch vụ</a>
-            </li>
-            <li>
-                <a>Hỗ trợ</a>
-            </li>
-            <li>
-                <a data-toggle="modal" data-target="#vtpLogin">
-                    Đăng nhập
-                </a>
-            </li>
-        </ul>
+    <div class="clear-top"></div>
+    <!--___________________________________________Service banner________________________________________________________-->
+    <div class="vtp-check-order">
+        <div class="container">
+            <div class="section-check-code">
+                <div class="left-box">
+                    <img class="img-responsive" src="/assets/images/ico-check-big.png" alt="ico-check-order-big" />
+                    <h2>Kiểm tra đơn hàng</h2>
+                </div>
+                <div class="right-box">
+                    <span>Mã theo dõi đơn hàng</span>
+                    <div class="input-group">
+                        <input class="form-control input-order" [(ngModel)]="order_code" (keyup.enter)="searchOrder()" placeholder="Nhập mã đơn hàng cần tìm"/>
+                        <a class="btn btn-search" (click)="searchOrder()">Tìm kiếm</a>
+                    </div>
+                    <h5 class="text-danger">
+                        {{  message }}
+                    </h5>
+                </div>
+            </div>
+        </div>
+
+        <div class="clear-0"></div>
     </div>
-    <div class="vtp-header col-xs-12">
-        <div class="vtp-header-mobile row">
-            <a class="vtp-mobile-menu-icon" href="javascript:void(0)">
-                <i class="fas fa-bars"></i>
-            </a>
-            <a class="dts-header-left-block-logo-mobile" href="javascript:void(0)">
-                <img class="dts-header-left-block-logo" src="/assets/images/logoNormal.png" alt="logo">
-            </a>
-            <a class="btn btn-login-mobile">Đăng ký</a>
-        </div>
-        <div class="vtp-header-left">
-            <img class="dts-header-left-block-logo" src="/assets/images/logoNormal.png" alt="logo" />
-        </div>
-        <div class="vtp-header-middle">
-            <ul class="clearfix">
-                <li>
-                    <a class="active" href="/">Trang chủ</a>
-                </li>
-                <li>
-                    <a href="/services">Dịch vụ</a>
-                </li>
-                <li>
-                    <a>Hỗ trợ</a>
-                </li>
-            </ul>
-        </div>
-        <div class="vtp-header-right">
-            <ul class="clearfix">
-                <li class="hotline">
-                    <span class="clearfix">Hot line</span>
-                    <a href="callto:19008095">19008095</a>
-                </li>
-                <li class="personal-login">
-                    <img src="/assets/images/icon/ViewFront/Login.png" /><a data-toggle="modal" data-target="#vtpLogin">Đăng nhập</a>
-                </li>
-                <li>
-                    <a class="btn btn-login hvr-bounce-to-right">Đăng ký sử dụng</a>
-                </li>
-            </ul>
+    <div class="clear-0"></div>
+
+
+
+    <!--____________________________________________Information of order_________________________________________________-->
+    <div class="vtp-check-order vtp-services-price wow fadeIn" *ngIf="OrderJourney != null || OrderJourney != undefined">
+        <div class="container">
+            <h2 class="title">Trạng thái đơn hàng</h2>
+            <div class="row">
+                <div class="col-xs-6 col-sm-2">
+                    <ul class="list-unstyled">
+                        <li><strong>Mã đơn hàng</strong></li>
+                        <li><strong>Khối lượng</strong></li>
+                        <li><strong>Tên dịch vụ</strong></li>
+                    </ul>
+                </div>
+                <div class="col-xs-6 col-sm-3">
+                    <ul class="list-unstyled">
+                        <li>{{ OrderJourney.orderNumber }} </li>
+                        <li>{{ OrderJourney.weight }} gram</li>
+                        <li>{{ OrderJourney.serviceName }}</li>
+                    </ul>
+                </div>
+            </div>
+
+            <div class="table-responsive">
+                <table class="table  table-price table-bordered">
+                    <thead>
+                        <tr>
+                            <th>
+                                Ngày
+                            </th>
+                            <th>
+                                Giờ
+                            </th>
+                            <th>
+                                Trạng thái
+                            </th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <ng-template ngFor let-track [ngForOf]="ListTracking">
+                            <tr>
+                                <!-- <td>{{ track.ORDER_NUMBER }}</td>
+                                <td>{{ OrderJourney.weight }}</td> -->
+                                <td>{{ track.ORDER_STATUSDATE.split(' ')[0] }}</td>
+                                <td>{{ track.ORDER_STATUSDATE.split(' ')[1] }}</td>
+                                <td>{{ track.STATUS_NAME.substring(21) }}</td>
+                            </tr>
+                        </ng-template>
+                    </tbody>
+                </table>
+            </div>
+
         </div>
     </div>
-    <router-outlet></router-outlet>
-    <!--______________________________________________________Footer top____________________________________________________________-->
+    <!--_______________________________________________Footer____________________________________________________________-->
     <div class="vtp-footer">
         <div class="container">
             <div class="row">
@@ -144,8 +163,7 @@
         </div>
     </div>
     <div class="clear-0"></div>
-
-    <!--______________________________________________________Footer bottom_________________________________________________________-->
+    <!--______________________________________________Footer bottom__________________________________________________-->
     <div class="vtp-footer-bottom">
         <div class="container">
             <div class="footer-bottom-left">

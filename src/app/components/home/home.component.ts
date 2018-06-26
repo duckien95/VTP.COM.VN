@@ -1,6 +1,7 @@
 import { Component, OnInit, ViewChild } from '@angular/core';
 import { FileUploadComponent } from '../../components/file-upload/file-upload.component';
 import { HomePageService } from '../../services/home-page.service'
+import { Router } from '@angular/router';
 @Component({
   selector: 'app-home',
   templateUrl: './home.component.html',
@@ -8,41 +9,58 @@ import { HomePageService } from '../../services/home-page.service'
   providers: [HomePageService]
 })
 export class HomeComponent implements OnInit {
-  @ViewChild(FileUploadComponent) fileUpload: FileUploadComponent;
+    @ViewChild(FileUploadComponent) fileUpload: FileUploadComponent;
+    ListImageItem: any;
+    ListService: any;
+    ListProvince: any;
+    ListDistrictSender: any;
+    ListDistrictReceiver: any;
+    ListCountry: any;
+    ListFee: any;
 
-  ListImageItem: any;
-  ListService: any;
-  ListProvince: any;
-  ListDistrictSender: any;
-  ListDistrictReceiver: any;
-  ListCountry: any;
-  ListFee: any;
+    sender_district: number = -1;
+    sender_province: number = -1;
+    receiver_district: number = -1;
+    receiver_province: number = -1;
+    receiver_country: string = '';
+    product_type: string = '';
+    product_weight: number;
+    money_collection: number;
+    type: number;
+    message: string;
 
-  sender_district: number = -1;
-  sender_province: number = -1;
-  receiver_district: number = -1;
-  receiver_province: number = -1;
-  receiver_country: string = '';
-  product_type: string = '';
-  product_weight: number;
-  money_collection: number;
-  type: number;
-  constructor( private homePageService: HomePageService) { }
+    order_code: string;
+    constructor( private homePageService: HomePageService, private router: Router) { }
 
-  ngOnInit() {
-    this.ListImageItem = [{'img_src': 'bgSlide1.png'}, { 'img_src' : 'bgSlide2.png'}];
-    this.ListService = [
-        { 'service_name': 'Dịch vụ hỏa tốc', 'service_url': '', 'class': 'hvr-sweep-to-left'  },
-        { 'service_name': 'Chuyển liên tỉnh', 'service_url': '','class': 'hvr-sweep-to-top'   },
-        { 'service_name': 'Dịch vụ chuyển phát quốc tế', 'service_url': '', 'class': 'hvr-sweep-to-bottom'  },
-        { 'service_name': 'Dịch vụ phát hàng thu tiền (COD)', 'service_url': '', 'class': 'hvr-sweep-to-right'  }
-    ];
+    ngOnInit() {
+        this.ListImageItem = [{'img_src': 'bgSlide1.png'}, { 'img_src' : 'bgSlide2.png'}];
+        this.ListService = [
+            { 'service_name': 'Dịch vụ hỏa tốc', 'service_url': '', 'class': 'hvr-sweep-to-left'  },
+            { 'service_name': 'Chuyển liên tỉnh', 'service_url': '','class': 'hvr-sweep-to-top'   },
+            { 'service_name': 'Dịch vụ chuyển phát quốc tế', 'service_url': '', 'class': 'hvr-sweep-to-bottom'  },
+            { 'service_name': 'Dịch vụ phát hàng thu tiền (COD)', 'service_url': '', 'class': 'hvr-sweep-to-right'  }
+        ];
 
-    this.homePageService.getProvinceList().subscribe( (res) => {
-        this.ListProvince = res;
-    });
+        this.homePageService.getProvinceList().subscribe( (res) => {
+            this.ListProvince = res;
+        });
 
-  }
+        this.homePageService.getCountryList().subscribe( (res) => {
+            this.ListCountry = res;
+        })
+
+    }
+
+    searchPostOffice(){
+        console.log('redirect')
+        this.router.navigate(['/post-office-network']);
+    }
+
+    onChangeType(){
+        this.ListFee = null;
+        this.message = '';
+    }
+
     changeProducType(product_type){
         this.product_type = product_type;
     }
@@ -70,28 +88,52 @@ export class HomeComponent implements OnInit {
     }
 
     getAllPrice(){
+
+        // let request = {
+        //     "SENDER_PROVINCE":2,
+        //     "SENDER_DISTRICT":55,
+        //     "RECEIVER_PROVINCE":56,
+        //     "RECEIVER_DISTRICT":636,
+        //     "PRODUCT_TYPE":"HH",
+        //     "PRODUCT_WEIGHT":15100000,
+        //     "PRODUCT_PRICE":15100000,
+        //     "MONEY_COLLECTION":"0",
+        //     "TYPE":1
+        // }
         let obj = {
             "SENDER_PROVINCE": this.sender_province,
             "SENDER_DISTRICT": this.sender_district,
-            "RECEIVER_PROVINCE": this.receiver_province,
-            "RECEIVER_DISTRICT": this.receiver_district,
+            "RECEIVER_PROVINCE": this.type == 0 ? this.receiver_country : this.receiver_province,
+            "RECEIVER_DISTRICT": this.type == 0 ? this.receiver_country : this.receiver_district,
             "PRODUCT_TYPE": this.product_type,
             "PRODUCT_WEIGHT": this.product_weight,
             "PRODUCT_PRICE": this.money_collection,
             "MONEY_COLLECTION": this.money_collection,
             "TYPE": this.type
         }
-        console.log(obj);
+        // console.log(obj);
         this.homePageService.getAllPrice(obj).subscribe( (res) => {
-            this.ListFee = res;
+            if(res.error){
+                // console.log(res);
+                this.message = res.message;
+            }
+            else {
+                this.message = '';
+                this.ListFee = res;
+            }
+
         })
     }
 
-  onSave() {
-    const img = this.fileUpload.imagePath;
-    console.log(img);
 
-  }
+    onTrackOrder(){
+        this.router.navigate(['/tracking'], { queryParams: { 'key' : this.order_code } });
+    }
+
+    onSave() {
+        const img = this.fileUpload.imagePath;
+        console.log(img);
+    }
 
 
       // let t = [];

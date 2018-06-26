@@ -48,6 +48,8 @@ import { BinLocationTypeService } from './services/binlocation-type.service';
 import { DistanceService } from './services/distance.service';
 import { ListServiceComponent } from './components/list-service/list-service.component';
 import { ServiceDetailComponent } from './components/list-service/service-detail/service-detail.component';
+import { CheckOrderComponent } from './check-order/check-order.component';
+import { SearchPostOfficeComponent } from './search-post-office/search-post-office.component';
 // import { WarehouseVendorService } from './services/warehouse-vendor.service';
 
 @NgModule({
@@ -55,9 +57,13 @@ import { ServiceDetailComponent } from './components/list-service/service-detail
     AppComponent,
     ListServiceComponent,
     ServiceDetailComponent,
+    CheckOrderComponent,
+    SearchPostOfficeComponent,
   ],
   imports: [
-    AppRoutingModule
+    AppRoutingModule,
+    FormsModule,
+    BrowserModule
   ],
   providers: [
     HttpClientService,

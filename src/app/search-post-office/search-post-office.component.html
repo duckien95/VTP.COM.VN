@@ -1,0 +1,40 @@
+<!--_________________________________________________________________________________________________________________-->
+<div class="vtp-mobile-menu-overlay dts-hide-pc"></div>
+<div class="clear-top"></div>
+<!--___________________________________________Service banner________________________________________________________-->
+<div class="vtp-post-office">
+    <div class="container">
+        <div class="row">
+            <div class="col-xs-12 col-sm-6 col-md-4 vtp-post-left">
+                <select class="form-control mb-10" [(ngModel)]="province" (change)="changeProvince()" [ngModelOptions]="{standalone:true}">
+                    <option value="-1">Thành phố</option>
+                    <ng-template ngFor let-province [ngForOf]="ListProvince">
+                        <option  [value]="province.PROVINCE_ID" [selected]="sender_province == province.PROVINCE_ID">{{province.PROVINCE_NAME}}</option>
+                    </ng-template>
+                </select>
+                <select class="form-control mb-10" [(ngModel)]="district" [ngModelOptions]="{standalone:true}">
+                    <option value="-1">Quận/Huyện</option>
+                    <ng-template ngFor let-district [ngForOf]="ListDistrict">
+                        <option [value]="district.DISTRICT_ID">{{district.DISTRICT_NAME}}</option>
+                    </ng-template>
+                </select>
+                <button type="button" name="button" class="btn btn-success" (click)="searchPostOffice()" [disabled]="province < 0 || district < 0">Tìm kiếm</button>
+
+                <div class="list-post-office marker-list" *ngIf="ListPostOffice != null" style="height: 450px; overflow-y: scroll;">
+                    <div *ngFor="let post of ListPostOffice; let i = index;" (click)="triggerMapMarker(i)" style="border-top-color: rgb(230, 230, 230); border-top-width: 1px; border-top-style: solid;">
+                        <h4 style="color: #00857f;">{{ post.NAME }}</h4>
+                        <p>{{ post.ADDRESS }}</p>
+                    </div>
+                </div>
+
+            </div>
+            <div class="col-xs-12 col-sm-6 col-md-8 vtp-post-right">
+                <div #map style="height: 600px; width: 100%">
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div class="clear-0"></div>
+</div>
+<div class="clear-0"></div>

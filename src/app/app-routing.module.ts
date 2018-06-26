@@ -55,6 +55,8 @@ import { VariationThemAttributeComponent } from './components/variation-theme/va
 import { FileUploaderPopupComponent } from './components/common/file-uploader-popup/file-uploader-popup.component';
 import { ListServiceComponent } from './components/list-service/list-service.component';
 import { ServiceDetailComponent } from './components/list-service/service-detail/service-detail.component';
+import { CheckOrderComponent } from './check-order/check-order.component';
+import { SearchPostOfficeComponent } from './search-post-office/search-post-office.component';
 
 const routesConfig: Routes = [
   {
@@ -64,6 +66,14 @@ const routesConfig: Routes = [
   {
     path: 'services',
     component: ListServiceComponent
+  },
+  {
+    path: 'tracking',
+    component: CheckOrderComponent
+  },
+  {
+    path: 'post-office-network',
+    component: SearchPostOfficeComponent
   },
   {
     path: 'detail',
