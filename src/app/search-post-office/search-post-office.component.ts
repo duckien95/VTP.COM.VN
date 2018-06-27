@@ -206,7 +206,7 @@ export class SearchPostOfficeComponent implements OnInit {
                 // console.log('show marker');
             });
 
-            thisRef.markerList.push(marker);
+            this.markerList.push(marker);
         }
 
     }

@@ -65,7 +65,7 @@ export class HomePageService {
             return result;
 
         }).catch( (error: any) => {
-            console.error(error);
+            // console.error(error);
             let errors = { error: true, message: 'Mã đơn hàng không tồn tại' };
              return Observable.of(errors);
         })

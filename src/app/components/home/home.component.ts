@@ -116,6 +116,7 @@ export class HomeComponent implements OnInit {
             if(res.error){
                 // console.log(res);
                 this.message = res.message;
+                this.ListFee = null;
             }
             else {
                 this.message = '';
